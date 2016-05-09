@@ -2,6 +2,10 @@
 
 [ $DEBUG ] && set -x
 
+MYSQL_USER="root"
+MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-MYSQL_PASS}
+
+
 set -eo pipefail
 
 # if command starts with an option, prepend mysqld
