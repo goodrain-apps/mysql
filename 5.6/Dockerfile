@@ -38,7 +38,7 @@ RUN { \
 	&& apt-get update && apt-get install -y mysql-server="${MYSQL_VERSION}" && rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql
 
-VOLUME $DATADIR
+VOLUME /data
 
 # copy etc dir
 COPY 5.6/etc /etc
