@@ -55,8 +55,6 @@ RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 # clear unnecessary files
 RUN rm -rf /usr/share/doc && \
     rm -rf /usr/share/man && \
-    rm -rf /var/lib/dpkg && \
-    rm -rf /var/lib/apt
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
