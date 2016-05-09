@@ -10,9 +10,6 @@ ENV CONFDIR /etc/mysql
 # timezone
 RUN echo "Asia/Shanghai" > /etc/timezone;dpkg-reconfigure -f noninteractive tzdata
 
-# copy etc dir
-COPY 5.6/etc /etc
-
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -g 200 -r mysql && useradd -u 200 -r -g mysql mysql
 
@@ -42,6 +39,9 @@ RUN { \
 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql
 
 VOLUME $DATADIR
+
+# copy etc dir
+COPY 5.6/etc /etc
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
