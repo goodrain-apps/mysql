@@ -65,8 +65,6 @@ for arg; do
 done
 
 if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
-	# Get config
-	DATADIR="$("$@" --verbose --help --log-bin-index=`mktemp -u` 2>/dev/null | awk '$1 == "datadir" { print $2; exit }')"
 
 	if [ ! -d "$DATADIR/mysql" ]; then
 		if [ -z "$MYSQL_ROOT_PASSWORD" -a -z "$MYSQL_ALLOW_EMPTY_PASSWORD" -a -z "$MYSQL_RANDOM_ROOT_PASSWORD" ]; then
@@ -75,11 +73,11 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 			exit 1
 		fi
 
-		mkdir -p "$DATADIR"
+		mkdir -p "$DATADIR/{data,log,tmp}"
 		chown -R mysql:mysql "$DATADIR"
 
 		echo 'Initializing database'
-		mysql_install_db --user=mysql --datadir="$DATADIR" --rpm --keep-my-cnf
+		mysql_install_db --user=mysql --datadir="${DATADIR}/data" --rpm --keep-my-cnf
 		echo 'Database initialized'
 		
 		"$@" --skip-networking &
