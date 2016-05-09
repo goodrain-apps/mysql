@@ -9,11 +9,7 @@ MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 
 set -eo pipefail
 
-case ${MEMORY_SIZE:-medium} in
-    "medium")
-       export INNODB_BUFFER_POOL_SIZE="64M" MAX_CONN="800"
-       echo "Optimizing Innodb_Buffer_Pool_Size for 512M Memory...."
-       ;;
+case ${MEMORY_SIZE:-large} in
     "large")
        export INNODB_BUFFER_POOL_SIZE="256M" MAX_CONN="1000"
        echo "Optimizing Innodb_Buffer_Pool_Size for 1G Memory...."
@@ -43,8 +39,8 @@ case ${MEMORY_SIZE:-medium} in
        echo "Optimizing Innodb_Buffer_Pool_Size for 64G Memory...."
        ;;
     *)
-       export INNODB_BUFFER_POOL_SIZE="64M" MAX_CONN="800"
-       echo "Optimizing Innodb_Buffer_Pool_Size for 512M Memory...."
+       export INNODB_BUFFER_POOL_SIZE="256M" MAX_CONN="1000"
+       echo "Optimizing Innodb_Buffer_Pool_Size for 1G Memory...."
        ;;
 esac
 
@@ -68,10 +64,6 @@ done
 sed -i -r "s/(innodb_buffer_pool_size)(.*)=.*/\1\2= $INNODB_BUFFER_POOL_SIZE/" $CONFDIR/my.cnf 
 sed -i -r "s/(max_connections)(.*)=.*/\1\2= $MAX_CONN/" $CONFDIR/my.cnf 
 
-# create data dirtctory
- /bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp}" 
-chown -R mysql:mysql "$DATADIR"
-
 if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 
 	if [ ! -d "$DATADIR/data/mysql" ]; then
@@ -80,6 +72,10 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 			echo >&2 '  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD'
 			exit 1
 		fi
+		
+		# create data dirtctory
+ 		/bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp}" 
+		chown -R mysql:mysql "$DATADIR"
 
 		echo 'Initializing database'
 		mysql_install_db --user=mysql --datadir="${DATADIR}/data" --rpm --keep-my-cnf
@@ -165,7 +161,6 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		echo
 	fi
 
-	chown -R mysql:mysql "$DATADIR"
 fi
 
 exec "$@"
