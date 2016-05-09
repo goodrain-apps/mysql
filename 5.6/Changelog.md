@@ -1,0 +1,6 @@
+- 将root的权限从`％` 修改为 `127.0.0.1`，root用户只能从本地登录
+- 添加admin用户，可以从任何ip登录，密码与`root` 一致(适配好雨)
+- 修改`DATADIR` 目录到 `/data` 并建立子目录，分别存储日志、数据、binlog
+- 根据系统变量(`MEMORY_TYPE`)设置 `Innodb Buffer Pool Size` 的值（适配好雨）
+- 自定义部分my.conf 内容
+- 添加默认UTF-8编码
