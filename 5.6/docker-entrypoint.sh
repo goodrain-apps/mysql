@@ -65,8 +65,8 @@ for arg; do
 done
 
 # replace innodb_buffer_pool_size and max_conn
-sed -i -r 's/(innodb_buffer_pool_size)(.*)=.*/\1\2= $INNODB_BUFFER_POOL_SIZE/' $CONFDIR/my.cnf 
-sed -i -r 's/(max_connections)(.*)=.*/\1\2= $MAX_CONN/' $CONFDIR/my.cnf 
+sed -i -r "s/(innodb_buffer_pool_size)(.*)=.*/\1\2= $INNODB_BUFFER_POOL_SIZE/" $CONFDIR/my.cnf 
+sed -i -r "s/(max_connections)(.*)=.*/\1\2= $MAX_CONN/" $CONFDIR/my.cnf 
 
 
 if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
