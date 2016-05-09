@@ -44,8 +44,6 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		mysql_install_db --user=mysql --datadir="$DATADIR" --rpm --keep-my-cnf
 		echo 'Database initialized'
 		
-		sleep 1500
-
 		"$@" --skip-networking &
 		pid="$!"
 
@@ -60,6 +58,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		done
 		if [ "$i" = 0 ]; then
 			echo >&2 'MySQL init process failed.'
+			rm -rf $DATADIR/*
 			exit 1
 		fi
 
