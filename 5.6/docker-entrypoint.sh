@@ -11,39 +11,39 @@ set -eo pipefail
 
 case ${MEMORY_SIZE:-medium} in
     "medium")
-       export INNODB_BUFFER_POOL_SIZE="128M"
+       export INNODB_BUFFER_POOL_SIZE="128M" MAX_CONN="800"
        echo "Optimizing Innodb_Buffer_Pool_Size for 512M Memory...."
        ;;
     "large")
-       export INNODB_BUFFER_POOL_SIZE="256M"
+       export INNODB_BUFFER_POOL_SIZE="256M" MAX_CONN="1000"
        echo "Optimizing Innodb_Buffer_Pool_Size for 1G Memory...."
        ;;
     "2xlarge")
-       export INNODB_BUFFER_POOL_SIZE="1G"
-       echo "Optimizing Innodb_Buffer_Pool_Size for 1G Memory...."
+       export INNODB_BUFFER_POOL_SIZE="1G" MAX_CONN="1200"
+       echo "Optimizing Innodb_Buffer_Pool_Size for 2G Memory...."
        ;;
     "4xlarge")
-       export INNODB_BUFFER_POOL_SIZE="2G"
+       export INNODB_BUFFER_POOL_SIZE="2G" MAX_CONN="1500"
        echo "Optimizing Innodb_Buffer_Pool_Size for 4G Memory...."
        ;;
     "8xlarge")
-       export INNODB_BUFFER_POOL_SIZE="4G"
+       export INNODB_BUFFER_POOL_SIZE="4G" MAX_CONN="1800"
        echo "Optimizing Innodb_Buffer_Pool_Size for 8G Memory...."
        ;;
     16xlarge)
-       export INNODB_BUFFER_POOL_SIZE="8G"
+       export INNODB_BUFFER_POOL_SIZE="8G" MAX_CONN="2000"
        echo "Optimizing Innodb_Buffer_Pool_Size for 16G Memory...."
        ;;
     32xlarge)
-       export INNODB_BUFFER_POOL_SIZE="16G"
+       export INNODB_BUFFER_POOL_SIZE="16G" MAX_CONN="2500"
        echo "Optimizing Innodb_Buffer_Pool_Size for 32G Memory...."
        ;;
     64xlarge)
-       export INNODB_BUFFER_POOL_SIZE="32G"
+       export INNODB_BUFFER_POOL_SIZE="32G" MAX_CONN="3000"
        echo "Optimizing Innodb_Buffer_Pool_Size for 64G Memory...."
        ;;
     *)
-       export INNODB_BUFFER_POOL_SIZE="128M"
+       export INNODB_BUFFER_POOL_SIZE="128M" MAX_CONN="800"
        echo "Optimizing Innodb_Buffer_Pool_Size for 512M Memory...."
        ;;
 esac
@@ -63,6 +63,11 @@ for arg; do
 			;;
 	esac
 done
+
+# replace innodb_buffer_pool_size and max_conn
+sed -i -r 's/(innodb_buffer_pool_size)(.*)=.*/\1\2= $INNODB_BUFFER_POOL_SIZE/' $CONFDIR/my.cnf 
+sed -i -r 's/(max_connections)(.*)=.*/\1\2= $MAX_CONN/' $CONFDIR/my.cnf 
+
 
 if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 
