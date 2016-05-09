@@ -1,7 +1,11 @@
 FROM debian:jessie
 
+# timezone
+RUN echo "Asia/Shanghai" > /etc/timezone;dpkg-reconfigure -f noninteractive tzdata
+
+
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r mysql && useradd -r -g mysql mysql
+RUN groupadd -g 200 -r mysql && useradd -u 200 -r -g mysql mysql
 
 RUN mkdir /docker-entrypoint-initdb.d
 
