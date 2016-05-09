@@ -11,7 +11,7 @@ set -eo pipefail
 
 case ${MEMORY_SIZE:-medium} in
     "medium")
-       export INNODB_BUFFER_POOL_SIZE="128M" MAX_CONN="800"
+       export INNODB_BUFFER_POOL_SIZE="64M" MAX_CONN="800"
        echo "Optimizing Innodb_Buffer_Pool_Size for 512M Memory...."
        ;;
     "large")
@@ -43,7 +43,7 @@ case ${MEMORY_SIZE:-medium} in
        echo "Optimizing Innodb_Buffer_Pool_Size for 64G Memory...."
        ;;
     *)
-       export INNODB_BUFFER_POOL_SIZE="128M" MAX_CONN="800"
+       export INNODB_BUFFER_POOL_SIZE="64M" MAX_CONN="800"
        echo "Optimizing Innodb_Buffer_Pool_Size for 512M Memory...."
        ;;
 esac
