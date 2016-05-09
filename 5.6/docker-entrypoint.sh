@@ -43,6 +43,8 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		echo 'Initializing database'
 		mysql_install_db --user=mysql --datadir="$DATADIR" --rpm --keep-my-cnf
 		echo 'Database initialized'
+		
+		sleep 1500
 
 		"$@" --skip-networking &
 		pid="$!"
