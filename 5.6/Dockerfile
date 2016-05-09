@@ -11,7 +11,7 @@ ENV CONFDIR /etc/mysql
 RUN echo "Asia/Shanghai" > /etc/timezone;dpkg-reconfigure -f noninteractive tzdata
 
 # copy etc dir
-COPY etc /
+COPY etc /etc
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -g 200 -r mysql && useradd -u 200 -r -g mysql mysql
