@@ -68,6 +68,9 @@ done
 sed -i -r "s/(innodb_buffer_pool_size)(.*)=.*/\1\2= $INNODB_BUFFER_POOL_SIZE/" $CONFDIR/my.cnf 
 sed -i -r "s/(max_connections)(.*)=.*/\1\2= $MAX_CONN/" $CONFDIR/my.cnf 
 
+# create data dirtctory
+mkdir -p "$DATADIR/{data,logs,tmp}"
+chown -R mysql:mysql "$DATADIR"
 
 if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 
@@ -77,9 +80,6 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 			echo >&2 '  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD'
 			exit 1
 		fi
-
-		mkdir -p "$DATADIR/{data,log,tmp}"
-		chown -R mysql:mysql "$DATADIR"
 
 		echo 'Initializing database'
 		mysql_install_db --user=mysql --datadir="${DATADIR}/data" --rpm --keep-my-cnf
