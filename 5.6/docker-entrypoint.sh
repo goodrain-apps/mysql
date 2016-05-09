@@ -7,6 +7,9 @@ MYSQL_RANDOM_ROOT_PASSWORD="$(pwgen -1 32)"
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-${MYSQL_PASS:-$MYSQL_RANDOM_ROOT_PASSWORD}}
 MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 
+LOGFILE="$DATADIR/logs/error.log"
+SLOWLOG="$DATADIR/logs/slow.log"
+
 set -eo pipefail
 
 case ${MEMORY_SIZE:-large} in
@@ -162,5 +165,8 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 	fi
 
 fi
+
+tail -F $LOGFILE &
+tail -f $SLOWLOG &
 
 exec "$@"
