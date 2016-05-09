@@ -49,7 +49,7 @@ VOLUME /data
 # copy etc dir
 COPY 5.6/etc /etc
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY 5.6/docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 
 # clear unnecessary files
