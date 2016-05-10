@@ -130,11 +130,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 
 		if [ "$MYSQL_USER" -a "$MYSQL_PASSWORD" ]; then
 			echo "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' ;" | "${mysql[@]}"
-
-			if [ "$MYSQL_DATABASE" ]; then
-				echo "GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%' ;" | "${mysql[@]}"
-			fi
-
+			echo "GRANT ALL ON *.* TO '$MYSQL_USER'@'%' ;" | "${mysql[@]}"
 			echo 'FLUSH PRIVILEGES ;' | "${mysql[@]}"
 		fi
 
