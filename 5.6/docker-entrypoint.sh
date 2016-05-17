@@ -81,7 +81,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		chown -R 200:200 "$DATADIR"
 
 		echo 'Initializing database'
-		mysql_install_db --user=mysql --datadir="${DATADIR}/data" --rpm --keep-my-cnf
+		mysql_install_db --user=200 --datadir="${DATADIR}/data" --rpm --keep-my-cnf
 		echo 'Database initialized'
 		
 		"$@" --skip-networking &
