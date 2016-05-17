@@ -78,7 +78,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		
 		# create data dirtctory
  		/bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp}" 
-		chown -R 200:200 "$DATADIR"
+		chown -R mysql:mysql "$DATADIR"
 
 		echo 'Initializing database'
 		mysql_install_db --user=mysql --datadir="${DATADIR}/data" --rpm --keep-my-cnf
@@ -159,6 +159,8 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		echo 'MySQL init process done. Ready for start up.'
 		echo
 	fi
+	
+	chown -R mysql:mysql "$DATADIR"
 
 fi
 
