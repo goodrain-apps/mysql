@@ -77,7 +77,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		fi
 
 		# create data dirtctory
-		/bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp}"
+		/bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp,etc}"
 		chown -R mysql:mysql "$DATADIR"
 
 		echo 'Initializing database'
