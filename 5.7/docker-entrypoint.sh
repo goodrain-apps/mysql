@@ -175,4 +175,6 @@ tail -f $SLOWLOG &
 --topic=cep.mysql.sniff.${SERVICE_ID} \
 -v=false &
 
+sleep ${PAUSE:-0}
+
 exec "$@"
