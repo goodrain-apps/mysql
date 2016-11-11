@@ -2,7 +2,7 @@ FROM debian:jessie
 
 # ENV
 ENV MYSQL_MAJOR 5.7
-ENV MYSQL_VERSION 5.7.12-1debian8
+ENV MYSQL_VERSION 5.7.16-1debian8
 ENV DATADIR /data
 ENV CONFDIR /etc/mysql
 
