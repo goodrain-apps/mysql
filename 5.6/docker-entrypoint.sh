@@ -77,7 +77,7 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]; then
 		fi
 		
 		# create data dirtctory
- 		/bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp}" 
+ 		/bin/bash -c "mkdir -pv $DATADIR/{data,logs,tmp,etc}" 
 		chown -R mysql:mysql "$DATADIR"
 
 		echo 'Initializing database'
@@ -164,14 +164,21 @@ fi
 tail -F $LOGFILE &
 tail -f $SLOWLOG &
 
+if [ "$CUR_NET" == "midolnet" ];then
+  DEVICE="eth1"
+else
+  DEVICE="eth0"
+fi
+
 # run mysql-sniffer
 /opt/bin/mysql-sniffer \
--i=eth1 \
+-i=${DEVICE} \
 -P=3306 \
 --service_id=${SERVICE_ID} \
 --tenant_id=${TENANT_ID} \
 --zmq_addr=tcp://172.30.42.1:7388 \
 --topic=cep.mysql.sniff.${SERVICE_ID} \
 -v=false &
+
 
 exec "$@"
