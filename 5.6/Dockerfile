@@ -7,7 +7,7 @@ ENV DATADIR /data
 ENV CONFDIR /etc/mysql
 
 
-# timezone
+# Timezone
 RUN echo "Asia/Shanghai" > /etc/timezone;dpkg-reconfigure -f noninteractive tzdata
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
@@ -20,7 +20,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 # File::Copy
 # Sys::Hostname
 # Data::Dumper
-RUN apt-get update && apt-get install -y perl wget pwgen --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y perl wget pwgen libzmq3 --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 # gpg: key 5072E1F5: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5
@@ -40,7 +40,6 @@ RUN { \
 
 # add mysql-sniffer for cep monitor
 RUN mkdir /opt/bin && apt-get update && apt-get install -y libpgm-5.1-0 libpcap0.8 \
-    && wget -q http://lang.goodrain.me/public/libzmq.so.4 -O /usr/lib/x86_64-linux-gnu/libzmq.so.4 \
     && wget -q http://lang.goodrain.me/public/mysql-sniffer -O /opt/bin/mysql-sniffer \
     && chmod 755 /opt/bin/mysql-sniffer
 
