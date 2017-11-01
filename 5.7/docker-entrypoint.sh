@@ -167,7 +167,7 @@ tail -f $SLOWLOG &
 
 # run mysql-sniffer
 /opt/bin/mysql-sniffer \
--i=eth1 \
+-i=eth0 \
 -P=3306 \
 --service_id=${SERVICE_ID} \
 --tenant_id=${TENANT_ID} \
