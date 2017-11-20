@@ -42,7 +42,7 @@ RUN { \
 # add mysql-sniffer for cep monitor
 RUN mkdir /opt/bin && apt-get update && apt-get install -y libpgm-5.1-0 libpcap0.8 \
     && wget -q http://lang.goodrain.me/public/libzmq.so.4 -O /usr/lib/x86_64-linux-gnu/libzmq.so.4 \
-    && wget -q http://lang.goodrain.me/public/mysql-sniffer -O /opt/bin/mysql-sniffer \
+    && wget -q http://lang.goodrain.me/public/mysql-sniffer.20170307 -O /opt/bin/mysql-sniffer \
     && chmod 755 /opt/bin/mysql-sniffer
 
 VOLUME /data

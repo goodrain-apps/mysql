@@ -10,6 +10,17 @@ MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD
 LOGFILE="$DATADIR/logs/error.log"
 SLOWLOG="$DATADIR/logs/slow.log"
 
+# set config
+CHARSET=${CHARSET:-utf8}
+if [ -f /tmp/etc/mysql/conf.d/${CHARSET}.cnf ];then
+  cp /tmp/etc/mysql/conf.d/${CHARSET}.cnf /etc/mysql/conf.d/
+else
+  echo "Unsupported character set: $CHARSET"
+  exit 1
+fi
+
+cp /tmp/etc/mysql/my.cnf /etc/mysql/my.cnf
+
 set -eo pipefail
 
 case ${MEMORY_SIZE:-large} in
@@ -167,7 +178,7 @@ tail -f $SLOWLOG &
 
 # run mysql-sniffer
 /opt/bin/mysql-sniffer \
--i=eth1 \
+-i=eth0 \
 -P=3306 \
 --service_id=${SERVICE_ID} \
 --tenant_id=${TENANT_ID} \

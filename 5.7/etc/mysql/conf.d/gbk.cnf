@@ -1,0 +1,5 @@
+[mysqld]
+character-set-server=gbk
+character_set_filesystem=gbk
+init-connect='SET NAMES gbk'
+skip-character-set-client-handshake
