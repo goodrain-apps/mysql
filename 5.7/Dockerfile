@@ -2,7 +2,7 @@ FROM debian:jessie
 
 # ENV
 ENV MYSQL_MAJOR 5.7
-ENV MYSQL_VERSION 5.7.16-1debian8
+ENV MYSQL_VERSION 5.7.20-1debian8
 ENV DATADIR /data
 ENV CONFDIR /etc/mysql
 
@@ -48,7 +48,7 @@ RUN mkdir /opt/bin && apt-get update && apt-get install -y libpgm-5.1-0 libpcap0
 VOLUME /data
 
 # copy etc dir
-COPY 5.7/etc /etc
+COPY 5.7/etc /tmp/etc
 
 COPY 5.7/docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
