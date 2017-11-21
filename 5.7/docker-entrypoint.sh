@@ -35,6 +35,7 @@ function set_config() {
 }
 
 # set custom variables
+echo "[mysqld]" >> $CONFIG_FILE
 set_config
 
 # set charset config
