@@ -205,16 +205,6 @@ fi
 tail -F $LOGFILE &
 tail -f $SLOWLOG &
 
-# run mysql-sniffer
-/opt/bin/mysql-sniffer \
--i=eth0 \
--P=3306 \
---service_id=${SERVICE_ID} \
---tenant_id=${TENANT_ID} \
---zmq_addr=tcp://172.30.42.1:7388 \
---topic=cep.mysql.sniff.${SERVICE_ID} \
--v=false &
-
 sleep ${PAUSE:-0}
 
 exec "$@"
